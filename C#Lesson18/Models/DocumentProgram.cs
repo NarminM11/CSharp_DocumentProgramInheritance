@@ -1,6 +1,6 @@
 ﻿namespace DocumentProgramNamespace
 {
-    public abstract class DocumentProgram
+    public class DocumentProgram
     {
         public void OpenDocument()
         {
