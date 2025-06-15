@@ -1,4 +1,4 @@
-﻿using DocumentProgramNamespace;
+using DocumentProgramNamespace;
 using ExpertDocumentNamespace;
 using ProDocumentProgramNamespace;
 
@@ -12,14 +12,14 @@ class Program
         do
         {
             Console.Clear();
-            Console.WriteLine("Use ↑ ↓ arrows to navigate, Enter to select:\n");
+            Console.WriteLine("↑ ↓:\n");
 
             for (int i = 0; i < options.Length; i++)
             {
                 if (i == selected)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"> {options[i]}");
+                    Console.WriteLine($"> {options[i].ToUpper()}");
                     Console.ResetColor();
                 }
                 else
@@ -43,28 +43,30 @@ class Program
     static void Main()
     {
         string[] versions = { "basic", "pro", "expert" };
-        int selected = ShowArrowMenu(versions);
+        int selectedIndex = ShowArrowMenu(versions);
+        string selectedVersion = versions[selectedIndex];
 
-        string selectedKey = versions[selected];
+        DocumentProgram document;
 
-        DocumentProgram docProgram;
-
-        if (selectedKey == "pro")
-            docProgram = new ProDocumentProgram();
-        else if (selectedKey == "expert")
-            docProgram = new ExpertDocument();
-        else
-            docProgram = new DocumentProgramImplementation();
+        switch (selectedVersion)
+        {
+            case "pro":
+                document = new ProDocumentProgram();
+                break;
+            case "expert":
+                document = new ExpertDocument();
+                break;
+            default:
+                document = new BasicDocumentProgram();
+                break;
+        }
 
         Console.Clear();
-        docProgram.OpenDocument();
-        docProgram.EditDocument();
-        docProgram.SaveDocument();
+        document.OpenDocument();
+        document.EditDocument();
+        document.SaveDocument();
 
         Console.WriteLine("\nPress any key to exit...");
         Console.ReadKey();
     }
-}
-class DocumentProgramImplementation : DocumentProgram
-{
 }
